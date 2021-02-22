@@ -6,7 +6,7 @@ const connectDB = async () => {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: true,
+      useFindAndModify: false
     });
     console.log(`Mongodb connected ${conn.connection.host}`.cyan.underline.bold);
   } catch (error) {
