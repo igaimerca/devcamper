@@ -1,9 +1,10 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const logger = require('./middleware/logger')
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
 const errorHandler = require('./middleware/error')
 const colors = require('colors')
+
 //Load env variables
 dotenv.config({ path: './config/config.env' });
 
@@ -13,10 +14,16 @@ connectDB();
 
 //Route files
 const bootcamps = require('./routes/bootcamps');
+const auth = require('./routes/auth')
 
 const app = express();
 //Body parser
 app.use(express.json());
+
+//cookie parser
+app.use(cookieParser())
+
+
 // app.use(logger);
 
 if (process.env.NODE_ENV === "development") {
@@ -25,6 +32,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/auth', auth)
 //User errorHandler as a middleware
 app.use(errorHandler)
 
